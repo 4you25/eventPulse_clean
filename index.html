@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Event Pulse - Account deletion</title>
+  <style>
+    :root {
+      color-scheme: light;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: #172033;
+      background: #f4f6fb;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+
+    main {
+      width: min(100%, 620px);
+      padding: 40px;
+      border: 1px solid #e2e7f0;
+      border-radius: 16px;
+      background: #fff;
+      box-shadow: 0 12px 40px rgb(23 32 51 / 8%);
+    }
+
+    nav {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-bottom: 32px;
+    }
+
+    button {
+      padding: 7px 12px;
+      border: 1px solid #d8deea;
+      border-radius: 8px;
+      background: #fff;
+      color: inherit;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    button[aria-pressed="true"] {
+      border-color: #3157c8;
+      background: #3157c8;
+      color: #fff;
+    }
+
+    p {
+      margin: 0;
+      font-size: clamp(1.1rem, 3vw, 1.35rem);
+      line-height: 1.7;
+    }
+
+    a {
+      color: #3157c8;
+      overflow-wrap: anywhere;
+    }
+
+    @media (max-width: 480px) {
+      main {
+        padding: 28px 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <nav aria-label="Language">
+      <button type="button" lang="en" data-language="en" aria-pressed="true">English</button>
+      <button type="button" lang="sk" data-language="sk" aria-pressed="false">Slovenčina</button>
+    </nav>
+    <p id="message">
+      To delete your Event Pulse account and app data, please contact us at
+      <a href="mailto:mosat.marek2@gmail.com">mosat.marek2@gmail.com</a>.
+    </p>
+  </main>
+  <script>
+    const messages = {
+      en: {
+        title: "Event Pulse - Account deletion",
+        text: "To delete your Event Pulse account and app data, please contact us at"
+      },
+      sk: {
+        title: "Event Pulse - Zmazanie účtu",
+        text: "Pre zmazanie účtu a údajov aplikácie Event Pulse nás kontaktujte na e-mail:"
+      }
+    };
+
+    document.querySelectorAll("[data-language]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const language = button.dataset.language;
+        const message = messages[language];
+        document.documentElement.lang = language;
+        document.title = message.title;
+        document.getElementById("message").innerHTML =
+          `${message.text} <a href="mailto:mosat.marek2@gmail.com">mosat.marek2@gmail.com</a>${language === "en" ? "." : ""}`;
+        document.querySelectorAll("[data-language]").forEach((option) => {
+          option.setAttribute("aria-pressed", String(option === button));
+        });
+      });
+    });
+  </script>
+</body>
+</html>
